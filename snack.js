@@ -61,6 +61,7 @@ const longBooksTitles = longBooks.map(bookTitle => {
     return bookTitle.title
 })
 console.log('Titoli di libri con più di 300 pagine:', longBooksTitles)
+longBooksTitles.forEach(title => console.log(title))
 
 
 /* Snack 2 - Il primo libro scontato
@@ -77,7 +78,7 @@ console.log('Libri disponibili:', availableBooks)
 const discountedBooks = availableBooks.map(book => {
     const prezzo = parseFloat(book.price)
     const sconto = prezzo * 20 / 100
-    const prezzoScontato = (prezzo - sconto).toFixed(0)
+    const prezzoScontato = (prezzo - sconto).toFixed(2)
 
     return {
         ...book,
@@ -131,5 +132,30 @@ console.log('Somma età autori:', agesSum)
 
 const agesMedia = agesSum / ages.length
 console.log('Media età autori:', agesMedia)
+
+
+/* Snack 5 (Bonus) - Raccogli i libri
+
+Usando la l'API https://boolean-spec-frontend.vercel.app/freetestapi/books/{id} usa la combinazione di .map() e Promise.all(), per creare una funzione (getBooks) che a partire da un array di id (ids), ritorna una promise che risolve un array di libri (books).
+Testala con l’array [2, 13, 7, 21, 19] . */
+
+// creo una variabile con array di id
+const ids = [2, 13, 7, 21, 19]
+
+// creo funzione async a cui passo gli id per fare chiamate
+async function getBooks(ids) {
+
+    // mappo gli ids per avere tante chiamate fetch quanti sono gli id
+    const bookPromises = ids.map(id => fetch(`https://boolean-spec-frontend.vercel.app/freetestapi/books/${id}`).then(response => response.json()))
+
+    //creo variabile per fare il Promise.all in cui do in pasto i bookPromises
+    const books = await Promise.all(bookPromises)
+
+    return books
+}
+
+// stampo i libri con id scelti
+getBooks(ids).then(books => console.log(books))
+
 
 
