@@ -116,6 +116,7 @@ console.log('Autori in ordine di età decrescente:', authors)
 
 
 /* Snack 4 - Calcola l’età media
+
 Creare un array (ages) che contiene le età degli autori dei libri.
 Calcola la somma delle età (agesSum) usando reduce.
 Stampa in console l’età media degli autori dei libri. */
@@ -132,6 +133,7 @@ console.log('Somma età autori:', agesSum)
 
 const agesMedia = agesSum / ages.length
 console.log('Media età autori:', agesMedia)
+
 
 
 /* Snack 5 (Bonus) - Raccogli i libri
@@ -155,7 +157,27 @@ async function getBooks(ids) {
 }
 
 // stampo i libri con id scelti
-getBooks(ids).then(books => console.log(books))
+getBooks(ids).then(books => console.log('Libri con id vari:', books))
+
+
+/* Snack 6 (Bonus) - Ordina i libri
+
+Crea una variabile booleana (areThereAvailableBooks) per verificare se c’è almeno un libro disponibile.
+Crea un array (booksByPrice) con gli elementi di books ordinati in base al prezzo (crescente).
+Ordina l’array booksByPricein base alla disponibilità (prima quelli disponibili), senza creare un nuovo array. */
+
+const areThereAvailableBooks = books.some(book => book.available)
+console.log("C'è almeno un libro disponibile?", areThereAvailableBooks)
+
+const booksByPrice = books.sort((a, b) => {
+    const prezzoA = parseFloat(a.price.replace('€', '')) // converto stringa prezzo in numero, togliendo simbolo €
+    const prezzoB = parseFloat(b.price.replace('€', ''))
+    return prezzoA - prezzoB // ordino in base al prezzo crescente
+})
+console.log('Libri ordinati in ordine di prezzo crescente', booksByPrice)
+
+booksByPrice.sort((a, b) => a.available === b.available ? 0 : a.available ? -1 : 1)
+console.log(booksByPrice)
 
 
 
